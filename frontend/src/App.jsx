@@ -16,21 +16,19 @@ import Error404 from './screens/Error404';
 
 const App = () => {
 	return (
-		<>
-			<Router>
-				<Header />
-				<Container>
-					<main className='py-3'>
-						<Routes>
-							<Route path='/' element={<HomeScreen />} />
-							<Route path='product/:id' element={<ProductScreen />} />
-							<Route path='/*' element={<Error404 />} />
-						</Routes>
-					</main>
-					<Footer />
-				</Container>
-			</Router>
-		</>
+		<Router>
+			<Header />
+			<Container>
+				<main className='py-3'>
+					<Routes>
+						<Route path='/' element={<HomeScreen />} />
+						<Route path='product/:id' element={<ProductScreen />} />
+						<Route path='/*' element={<Error404 />} />
+					</Routes>
+				</main>
+			</Container>
+			<Footer />
+		</Router>
 	);
 };
 

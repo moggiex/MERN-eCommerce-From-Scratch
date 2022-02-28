@@ -5,7 +5,10 @@ import connectDB from './config/db.js'
 import express from 'express';
 import colors from 'colors'
 import products from './data/products.js';
-// const products = require('./data/products')
+import { notFound, errorHandler } from './middleware/error.js';
+
+// Routes
+import productRoutes from './routes/productRoutes.js'
 
 // get env 
 dotenv.config();
@@ -14,21 +17,19 @@ dotenv.config();
 connectDB();
 
 
-const PORT = process.env.PORT || 5000;
+// Express
 const app = express();
 
 app.get('/', (req, res) => {
     res.send('howdy')
 })
 
-app.get('/api/products', (req, res) => {
-    res.json(products)
-})
+// Route files
+app.use('/api/products', productRoutes)
 
-app.get('/api/products/:id', (req, res) => {
+// Middleware
+app.use(notFound)
+app.use(errorHandler)
 
-    const product = products.find((p) => p._id === req.params.id)
-    res.json(product)
-})
-
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`NodeJS Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold))
