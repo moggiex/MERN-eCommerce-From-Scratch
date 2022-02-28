@@ -4,7 +4,7 @@ const Error404 = () => {
 	return (
 		<>
 			<h1>404</h1>
-			<p>Details now found</p>
+			<p>Details not found</p>
 		</>
 	);
 };

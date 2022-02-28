@@ -14,10 +14,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Rating from '../components/Rating';
 
 // Sample data
-import products from '../products';
-import Error404 from './Error404';
+import { useState, useEffect } from 'react';
 
-const ProductScreen = () => {
+import Error404 from './Error404';
+import axios from 'axios';
+
+const ProductScreen = ({}) => {
 	const params = useParams();
 	const navigate = useNavigate();
 
@@ -25,9 +27,25 @@ const ProductScreen = () => {
 	// 	return <Error404 />;
 	// }
 
-	const product = products.find((p) => p._id === params.id);
+	const [product, setProduct] = useState([]);
+	const [error, setError] = useState(false);
 
-	console.log(product);
+	useEffect(() => {
+		const fetchProduct = async () => {
+			setError(false);
+
+			try {
+				const { data } = await axios.get(`/api/products/${params.id}`);
+				console.log('product', data);
+				setProduct(data);
+			} catch (error) {
+				console.error(error.message);
+				setError(true);
+			}
+		};
+
+		fetchProduct();
+	}, [params.id]);
 
 	return (
 		<>
@@ -49,11 +67,16 @@ const ProductScreen = () => {
 								<h3>{product.name}</h3>
 							</ListGroupItem>
 							<ListGroupItem>
-								<Rating
-									value={product.rating}
-									text={`${product.numReviews} reviews`}
-								/>
+								{product && product.rating ? (
+									<Rating
+										value={product.rating}
+										text={`${product.numReviews} reviews`}
+									/>
+								) : (
+									''
+								)}
 							</ListGroupItem>
+
 							<ListGroupItem>Price: ${product.price}</ListGroupItem>
 							<ListGroupItem>Description: {product.description}</ListGroupItem>
 						</ListGroup>
@@ -66,7 +89,7 @@ const ProductScreen = () => {
 									<Row>
 										<Col> Price:</Col>
 										<Col>
-											<stronng>{product.price}</stronng>
+											<strong>{product.price}</strong>
 										</Col>
 									</Row>
 								</ListGroupItem>
@@ -74,9 +97,9 @@ const ProductScreen = () => {
 									<Row>
 										<Col> Status:</Col>
 										<Col>
-											<stronng>
+											<strong>
 												{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-											</stronng>
+											</strong>
 										</Col>
 									</Row>
 								</ListGroupItem>

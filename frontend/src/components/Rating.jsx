@@ -53,7 +53,7 @@ const Rating = ({ value, text, color = 'orange' }) => {
 				<i
 					style={{ color }}
 					className={
-						value == 5
+						value === 5
 							? 'fas fa-star'
 							: value >= 4.5
 							? 'fas fa-star-half-alt'

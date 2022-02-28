@@ -12,6 +12,7 @@ import { Container } from 'react-bootstrap';
 import './index.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import Error404 from './screens/Error404';
 
 const App = () => {
 	return (
@@ -23,6 +24,7 @@ const App = () => {
 						<Routes>
 							<Route path='/' element={<HomeScreen />} />
 							<Route path='product/:id' element={<ProductScreen />} />
+							<Route path='/*' element={<Error404 />} />
 						</Routes>
 					</main>
 					<Footer />
