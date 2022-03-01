@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions.js';
 
+// Components
 import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
