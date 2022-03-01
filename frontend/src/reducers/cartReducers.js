@@ -21,18 +21,27 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
             // make sure we won't have a duplciate
             const existItem = state.cartItems.find((x) => x.product === item.product)
 
+            const newCartItems = (state.cartItems.map((x) => (x.product === existItem.product ? item : x)))
+            console.log('state.cartItems', state.cartItems)
+
             if (existItem) {
                 return {
                     ...state,
-                    cartItems: state.cartItems.map((x) =>
-                        x.product === existItem.product ? item : x
-                    ),
+                    cartItems: newCartItems
+
                 }
             } else {
                 return {
                     ...state,
                     cartItems: [...state.cartItems, item],
                 }
+            }
+
+        case CART_REMOVE_ITEM:
+            // strip out the sent product id
+            return {
+                ...state,
+                cartItems: state.cartItems.filter(x => x.product !== action.payload)
             }
 
         default:
