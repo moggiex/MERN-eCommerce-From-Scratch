@@ -13,7 +13,7 @@ router.get(
     '/',
     asyncHandler(
         async (req, res) => {
-
+            // throw new Error('Product not Found')
             const products = await Product.find({})
             res.json(products)
         }))

@@ -29,7 +29,7 @@ import {
 import axios from 'axios';
 
 
-// duispatch is the action
+// Make the action
 export const listProducts = () => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_LIST_REQUEST })
@@ -42,13 +42,40 @@ export const listProducts = () => async (dispatch) => {
             payload: data
         })
 
-    } catch (err) {
+    } catch (error) {
+        // console.log(error.message);
+        // console.log('-----------')
         // feck
         dispatch({
             type: PRODUCT_LIST_FAIL,
-            payoad: err.message && err.response.data.message
-                ? err.response.data.message
-                : err.message
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+
+// Get the product
+export const listProductDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: PRODUCT_DETAILS_REQUEST })
+
+        // get products
+        const { data } = await axios.get(`/api/products/${id}`);
+
+        dispatch({
+            type: PRODUCT_DETAILS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_DETAILS_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
         })
     }
 }

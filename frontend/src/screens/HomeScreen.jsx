@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions.js';
 
 import Product from '../components/Product';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 
 // Sample data
 // import products from '../products';
@@ -24,21 +26,21 @@ function HomeScreen() {
 	return (
 		<>
 			<h1>Latest Products</h1>
+			{error ? console.log('error:', error) : ''}
 			{loading ? (
-				// show loading
-				<h1>Loading....</h1>
+				<Loader />
 			) : error ? (
-				// show error
-				<h3>{error}</h3>
+				<Message variant='danger'>{error}</Message>
 			) : (
-				// else
-				<Row>
-					{products.map((product) => (
-						<Col sm={12} md={6} lg={4} xl={3} key={product._id}>
-							<Product product={product} />
-						</Col>
-					))}
-				</Row>
+				<>
+					<Row>
+						{products.map((product) => (
+							<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+								<Product product={product} />
+							</Col>
+						))}
+					</Row>
+				</>
 			)}
 		</>
 	);

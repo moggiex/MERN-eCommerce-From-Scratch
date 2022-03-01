@@ -12,6 +12,7 @@ import { Container } from 'react-bootstrap';
 import './index.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
 import Error404 from './screens/Error404';
 
 const App = () => {
@@ -22,7 +23,12 @@ const App = () => {
 				<main className='py-3'>
 					<Routes>
 						<Route path='/' element={<HomeScreen />} />
+
 						<Route path='product/:id' element={<ProductScreen />} />
+
+						<Route path='/cart/' element={<CartScreen />} />
+						<Route path='/cart/:id' element={<CartScreen />} />
+
 						<Route path='/*' element={<Error404 />} />
 					</Routes>
 				</main>
